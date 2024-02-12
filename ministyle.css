@@ -19,9 +19,9 @@ Licensed under MIT (https://github.com/SekJinWei/ministyle/blob/main/LICENSE)
   --nav-item-active-bg: #394551;
   --caption-color: #394551;
   --table-header-bg: #90b0d5;
-  --border-focus-color: #86b7fe;
-  --trans-time: 0.2s;
-  --trans-type: ease-in-out;
+  --border-focus-color: 216, 98%, 52%;
+  --border-valid-color: 120, 98%, 25%;
+  --border-invalid-color: 0, 75%, 52%;
 }
 
 .hidden,
@@ -181,7 +181,7 @@ nav ul li a {
   text-decoration: none;
   padding: 0.5rem 1rem;
   color: var(--nav-item-color);
-  transition: color var(--trans-time) var(--trans-type), background-color var(--trans-time) var(--trans-type), border-color var(--trans-time) var(--trans-type);
+  transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
 }
 
 nav ul li a:hover {
@@ -203,7 +203,7 @@ nav ul li a.brand {
   font-weight: 600;
   padding: 0.3125rem 0.75rem;
   color: var(--nav-item-color);
-  transition: color var(--trans-time) var(--trans-type), background-color var(--trans-time) var(--trans-type), border-color var(--trans-time) var(--trans-type);
+  transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
 }
 
 nav ul li a.info {
@@ -213,7 +213,7 @@ nav ul li a.info {
   cursor: pointer;
   padding: 0.5rem 1rem;
   color: color-mix(in srgb, var(--nav-item-color), transparent);
-  transition: color var(--trans-time) var(--trans-type), background-color var(--trans-time) var(--trans-type), border-color var(--trans-time) var(--trans-type);
+  transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
 }
 
 nav ul li.brand {
@@ -249,7 +249,7 @@ button,
   background-color: var(--body-bg);
   border: 1px solid var(--body-color);
   border-radius: 0.375rem;
-  transition: color var(--trans-time) var(--trans-type), background-color var(--trans-time) var(--trans-type), border-color var(--trans-time) var(--trans-type);
+  transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
 }
 
 button:hover,
@@ -295,35 +295,52 @@ th, td {
   border: 1px solid var(--body-color);
 }
 
-
-.form-floating { /* Only works on [type="txt, number, tel, email, password, search, url"] */
+.form-floating { /* Only works on [type="txt, number, tel, email, password, search, url"], textarea and select */
   position: relative;
-  padding-bottom: 3rem;
+  margin-bottom: 3rem;
 }
 
-.form-floating input {
+.form-floating input,
+.form-floating textarea,
+.form-floating select {
   display: block;
   width: 100%;
   min-height: 3rem;
-  padding: 0.75rem 0.75rem 0;
-  font-size: 1rem;
+  appearance: none;
+  font-family: inherit;
+  font-size: 100%;
   font-weight: 400;
   line-height: 1.5;
+  padding: 0.75rem 0.75rem 0;
   color: var(--body-color);
-  appearance: none;
   background-color: transparent;
   border: 1px solid var(--body-color);
   border-radius: 0.375rem;
-  transition: border-color var(--trans-time) var(--trans-type), box-shadow var(--trans-time) var(--trans-type);
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
 
-.form-floating input:focus {
-  border-color: var(--border-focus-color);
+.form-floating textarea {
+  resize: vertical;
+  padding: 1rem 0.75rem;
+}
+
+.form-floating select {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 16px 12px;
+} 
+
+.form-floating input:focus,
+.form-floating textarea:focus,
+.form-floating select:focus {
+  border-color: hsl(var(--border-focus-color));
   outline: 0;
-  box-shadow: 0 0 0 0.25rem var(--border-focus-color);
+  box-shadow: 0 0 0 0.25rem hsla(var(--border-focus-color), 0.25);
 }
 
-.form-floating input::placeholder {
+.form-floating input::placeholder,
+.form-floating textarea::placeholder {
   color: transparent;
 }
 
@@ -334,7 +351,7 @@ th, td {
   z-index: -1;
   height: 3rem;
   padding: 0.75rem calc(0.75rem + 1px);
-  font-size: 1rem;
+  font-size: 100%;
   overflow: visible;
   vertical-align: middle;
   text-align: center;
@@ -342,15 +359,70 @@ th, td {
   white-space: nowrap;
   pointer-events: none;
   transform-origin: center;
-  transition: padding var(--trans-time) var(--trans-type), font-size var(--trans-time) var(--trans-type), opacity var(--trans-time) var(--trans-type);
+  transition: padding 0.2s ease-in-out, font-size 0.2s ease-in-out, opacity 0.2s ease-in-out;
 }
 
 .form-floating > input:focus ~ label,
-.form-floating > input:not(:placeholder-shown) ~ label {
+.form-floating > textarea:focus ~ label,
+.form-floating > select:focus ~ label,
+.form-floating > input:not(:placeholder-shown) ~ label,
+.form-floating > textarea:not(:placeholder-shown) ~ label,
+.form-floating > select:not(:placeholder-shown) ~ label {
   height: 1.5rem;
   padding: 0 calc(0.75rem + 1px);
   font-size: 0.85rem;
   opacity: 0.85;
+}
+
+.form-file { /* Only works on [type="file"] */
+  display: inline-flex;
+  margin-bottom: 3rem;
+}
+
+.form-file label {
+  display: block;
+  font-size: 100%;
+  line-height: 1.5;
+  padding: 0.375rem 0.75rem;
+  color: var(--body-color);
+  background-color: var(--body-bg);
+  border: 1px solid var(--body-color);
+  border-inline-end: 0;
+  border-radius: 0.375rem 0 0 0.375rem;
+}
+
+.form-file [type="file"] {
+  display: block;
+  font-family: inherit;
+  font-size: 100%;
+  line-height: 1.5;
+  color: var(--body-color);
+  background-color: var(--body-bg);
+  border: 1px solid var(--body-color);
+  border-inline-start: 0;
+  border-radius: 0 0.375rem 0.375rem 0;
+  transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+}
+
+.form-file [type="file"]::file-selector-button {
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 100%;
+  line-height: 1.5;
+  padding: 0.375rem 0.75rem;
+  margin-inline-end: 0.75rem;
+  color: var(--body-color);
+  background-color: var(--body-bg);
+  border-width: 0;
+  border-inline: solid 1px var(--body-color);
+  transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+}
+
+.form-file [type="file"]:hover,
+.form-file [type="file"]:hover::file-selector-button,
+.form-file [type="file"]::file-selector-button:hover {
+  color: var(--body-bg);
+  background-color: var(--body-color);
 }
 
 .form-button-panel, /* Only works on button, [type="submit, reset, image, button"] */
@@ -392,53 +464,22 @@ th, td {
   margin-left: 2rem;
 }
 
-.form-file { /* Only works on [type="file"] */
-  display: inline-flex;
-  padding-bottom: 3rem;
+.form-floating.was-validated input:valid,
+.form-floating input.is-valid {
+  border-color: hsl(var(--border-valid-color));
 }
 
-.form-file label {
-  display: block;
-  font-size: 100%;
-  line-height: 1.5;
-  padding: 0.375rem 0.75rem;
-  color: var(--body-color);
-  background-color: var(--body-bg);
-  border: 1px solid var(--body-color);
-  border-inline-end: 0;
-  border-radius: 0.375rem 0 0 0.375rem;
+.form-floating.was-validated input:valid:focus,
+.form-floating input.is-valid:focus {
+  box-shadow: 0 0 0 0.25rem hsla(var(--border-valid-color), 0.25);
 }
 
-.form-file [type="file"] {
-  display: block;
-  font-family: inherit;
-  font-size: 100%;
-  line-height: 1.5;
-  color: var(--body-color);
-  background-color: var(--body-bg);
-  border: 1px solid var(--body-color);
-  border-inline-start: 0;
-  border-radius: 0 0.375rem 0.375rem 0;
-  transition: color var(--trans-time) var(--trans-type), background-color var(--trans-time) var(--trans-type), border-color var(--trans-time) var(--trans-type);
+.form-floating.was-validated input:invalid,
+.form-floating input.is-invalid {
+  border-color: hsl(var(--border-invalid-color));
 }
 
-.form-file [type="file"]::file-selector-button {
-  cursor: pointer;
-  font-family: inherit;
-  font-size: 100%;
-  line-height: 1.5;
-  padding: 0.375rem 0.75rem;
-  margin-inline-end: 0.75rem;
-  color: var(--body-color);
-  background-color: var(--body-bg);
-  border-width: 0;
-  border-inline: solid 1px var(--body-color);
-  transition: color var(--trans-time) var(--trans-type), background-color var(--trans-time) var(--trans-type), border-color var(--trans-time) var(--trans-type);
-}
-
-.form-file [type="file"]:hover,
-.form-file [type="file"]:hover::file-selector-button,
-.form-file [type="file"]::file-selector-button:hover {
-  color: var(--body-bg);
-  background-color: var(--body-color);
+.form-floating.was-validated input:invalid:focus,
+.form-floating input.is-invalid:focus {
+  box-shadow: 0 0 0 0.25rem hsla(var(--border-invalid-color), 0.25);
 }
